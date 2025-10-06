@@ -2,10 +2,10 @@ public class HelpDesk{
     private int time; // current simulation time in minutes
     private LLNode<Student> currentStudent; // the student currently being helped
     private String status; // current status of the help desk (e.g., "IDLE" or "Helping [Student Name] from [Course Number]")
-    private Student[] queue100 = new Student[3];
-    private Student[] queue200 = new Student[3];
-    private Student[] queue300 = new Student[3]; //I have overthought everything and now understand
-    private Student[] queue400 = new Student[3];
+    private ArrayBoundedQueue<Student> queue100 = new ArrayUnboundedQueue<Student>;
+    private ArrayBoundedQueue<Student> queue200 = new ArrayUnboundedQueue<Student>;
+    private ArrayBoundedQueue<Student> queue300 = new ArrayUnboundedQueue<Student>; //I have overthought everything and now understand
+    private ArrayBoundedQueue<Student> queue400 = new ArrayUnboundedQueue<Student>; //this may work better idk tho, might revert later 
 
 /*• Advance the simulation one minute.
 • This method handles the time-stepped simulation logic.
@@ -88,3 +88,4 @@ public String getLog(){
 } // end of HelpDesk class
 
   
+

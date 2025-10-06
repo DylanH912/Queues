@@ -1,6 +1,6 @@
 public class HelpDesk{
     private int time; // current simulation time in minutes
-    private LLNode<Student> currentStudent; // the student currently being helped
+    private Student currentStudent; // the student currently being helped
     private String status; // current status of the help desk (e.g., "IDLE" or "Helping [Student Name] from [Course Number]")
     private ArrayBoundedQueue<Student> queue100 = new ArrayBoundedQueue<Student>();
     private ArrayBoundedQueue<Student> queue200 = new ArrayBoundedQueue<Student>();
@@ -65,28 +65,27 @@ return this.time;
 
 /*Return the status of the simulation at the current time.
   Example: "Time 2, Helping Jack from CSC110" or "Time 0, IDLE"
+  */
 
 public String toString(){
-    name = currentStudent.getName()
-    course = currentStudent.getCourse()
+    String name = currentStudent.getName();
+    int course = currentStudent.getCourse();
 
     if (status == "IDLE"){
-        System.out.printf("Time %d, IDLE", this.time);
+        return String.format("Time %d, IDLE", this.time);
     }
     else{
-        System.out.printf("Time %d, Helping %s from %s", this.time, name, course);
+        return String.format("Time %d, Helping %s from %s", this.time, name, course);
     }
+    
 }
-*/
+
 /*Return the entire HelpDesk session log from beginning to end.
  Contains a chronological record of all queuing, helping, and completion events.
 */
 public String getLog(){
 
-    return " " + this.time + ", " + this.status;
+    return toString();
 }
 
 } // end of HelpDesk class
-
-  
-

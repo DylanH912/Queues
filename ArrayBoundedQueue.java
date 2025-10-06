@@ -1,5 +1,5 @@
 public class ArrayBoundedQueue<T> implements QueueInterface<T> {
-    private int DEFCAP =100;
+    private int DEFCAP =3; //hardcoding max value for now
     private T[] elements;
     private int numElements =0;
     private int front =0;
@@ -41,4 +41,5 @@ public class ArrayBoundedQueue<T> implements QueueInterface<T> {
     public Integer length(){
         return numElements;
     }
+
 }

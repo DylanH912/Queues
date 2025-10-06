@@ -2,11 +2,13 @@ public class HelpDesk{
     private int time; // current simulation time in minutes
     private LLNode<Student> currentStudent; // the student currently being helped
     private String status; // current status of the help desk (e.g., "IDLE" or "Helping [Student Name] from [Course Number]")
-    private ArrayBoundedQueue<Student>[] queue100 = new ArrayBoundedQueue<Student>[3];                //I believe these need to be a ArrayBoundedQueues ------------------- SZ
-    private ArrayBoundedQueue<Student>[] queue200 = new ArrayBoundedQueue<Student>[3];
-    private ArrayBoundedQueue<Student> [] queue300 = new ArrayBoundedQueue<Student>[3];
-    private ArrayBoundedQueue<Student>[] queue400 = new ArrayBoundedQueue<Student>[3];
+    private ArrayBlockingQueue<Student>[] queues = new ArrayBlockingQueue[3];
 
+    public HelpDesk(){
+        for (int i = 0; i < queues.length; i++) {
+            queues[i] = new ArrayBlockingQueue<Student>(3);
+        }
+    }
 /*• Advance the simulation one minute.
 • This method handles the time-stepped simulation logic.
 • Checks if the current student being helped is finished.
@@ -14,13 +16,16 @@ public class HelpDesk{
 queue.
 */
 public void step(){
+    this.time++;
+
+
     if(currentStudent = null){
         this.status = "IDLE";
     }
     else{
         this.status = "Helping " + currentStudent.toString();
     }
-    this.time++;
+    
 
 }
 
@@ -34,14 +39,14 @@ needed).
 public void addStudent(String name, int course, int workload){
     Student newStudent = new Student(name, course, workload);
 
-        if (course <= 199 &&  !queue100.isFull()){
-            queue100.enqueue(newStudent)
-        } else if (course <= 299 && !queue200.isFull()){
-            queue200.enqueue(newStudent)
-        } else if (course <= 399 && !queue300.isFull()){
-            queue300.enqueue(newStudent)
-        } else if (course <= 499 && !queue400.isFull()){
-            queue400.enqueue(newStudent)
+        if (course <= 199 &&  !queue[0].isFull()){
+            queue[0].enqueue(newStudent)
+        } else if (course <= 299 && !queue[1].isFull()){
+            queue[1].enqueue(newStudent)
+        } else if (course <= 399 && !queue[2].isFull()){
+            queue[2].enqueue(newStudent)
+        } else if (course <= 499 && !queue[3].isFull()){
+            queue[3].enqueue(newStudent)
         } else {
             System.out.print("****Temp Turned Away " + newStudent.getName() + "*****")
         }
@@ -61,7 +66,7 @@ return this.time;
 public String toString(){
     name = currentStudent.getName()
     course = currentStudent.getCourse()
-    
+
     if (status == "IDLE"){
         System.out.printf("Time %d, IDLE", this.time);
     }

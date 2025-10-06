@@ -6,7 +6,7 @@ public class ArrayBoundedQueue<T> implements QueueInterface<T> {
     private int rear;
     
     
-    public ArrayBoundedQueue(int DEFCAP) {
+    public ArrayBoundedQueue() {
         this.DEFCAP = DEFCAP;
         elements = (T[]) new Object[DEFCAP];
         rear= DEFCAP-1;

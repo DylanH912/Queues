@@ -38,16 +38,16 @@ needed).
 public void addStudent(String name, int course, int workload){
     Student newStudent = new Student(name, course, workload);
 
-        if (course <= 199 &&  !queue100.isFull()){
+        if (course <= 199 &&  queue100.length() < 2){
             queue100.enqueue(newStudent);
-            System.out.println("Level-1 " + newStudent.getName());
-        } else if (course <= 299 && !queue200.isFull()){
+            System.out.println("Level-1 " + newStudent.getName() + "  " + queue100.length());
+        } else if (course <= 299 && queue200.length() < 2){
             queue200.enqueue(newStudent);
             System.out.println("Level-2 " + newStudent.getName());
-        } else if (course <= 399 && !queue300.isFull()){
+        } else if (course <= 399 && queue300.length() < 2){
             queue300.enqueue(newStudent);
             System.out.println("Level-3 " + newStudent.getName());
-        } else if (course <= 499 && !queue400.isFull()){
+        } else if (course <= 499 && queue400.length() < 2){
             queue400.enqueue(newStudent);
             System.out.println("Level-4 " + newStudent.getName());
         } else {

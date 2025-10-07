@@ -20,6 +20,7 @@ public class ArrayBoundedQueue<T> implements QueueInterface<T> {
             return temp;
         }
         front++;
+        numElements--;
         return temp;
     }
     public void enqueue(T item){
@@ -30,6 +31,7 @@ public class ArrayBoundedQueue<T> implements QueueInterface<T> {
         }        
         rear++;
         elements[rear]=item;
+        numElements++;
         return;
     }
     public boolean isEmpty(){

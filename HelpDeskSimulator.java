@@ -15,7 +15,7 @@ public class HelpDeskSimulator{ //Keeps the log
             int workload = Integer.parseInt(parts[3]);
             moreStudents = moreStudents();
             help.addStudent(name, course, workload);
-        }
+        }    
     }
 
     //------ No-Constraints-Constructor--------

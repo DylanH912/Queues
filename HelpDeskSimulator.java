@@ -4,18 +4,32 @@ public class HelpDeskSimulator{ //Keeps the log
     private static Scanner scanner = new Scanner(System.in);
     public static void main(String[] args){
         HelpDesk help = new HelpDesk();
+        System.out.print("Enter the number of minutes to simulate: ");
+        int toDo = scanner.nextInt();
+        scanner.nextLine(); //Consume newline
         
         boolean moreStudents = true;
+        boolean firstArrival = true;
         while (moreStudents){
             System.out.print("Enter student info: ");
             String info  = scanner.nextLine();
             String[] parts = info.split(" ");
+            int start = Integer.parseInt(parts[0]);
             String name = parts[1];
             int course = Integer.parseInt(parts[2]); 
             int workload = Integer.parseInt(parts[3]); 
+            help.addStudent(start, name, course, workload); //Needs to add the students at the start time given
+            if(firstArrival){
+                help.setCurrentStudent(help.nextStudent()); //gets the first student to start the process
+                firstArrival = false;
+            }
             moreStudents = moreStudents();
-            help.addStudent(name, course, workload); //Needs to add the students at the start time given
-        }    
+        }
+
+        for(int i = 0; i < toDo; i++){
+            help.step();
+        }
+        
     }
 
     //------ No-Constraints-Constructor--------

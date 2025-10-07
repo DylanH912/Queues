@@ -17,11 +17,15 @@ queue.
 */
 
     public void step(){
+        boolean idle = true;
 
-        if (currentStudent.getWorkload() == 0){ //Remove Student if no more work is to be done
+        if(!idle){ //Skip all code for helping current students for steps with no student
+            if (currentStudent.getWorkload() == 0){ //Remove Student if no more work is to be done
             //update log
             System.out.println(currentStudent.getName() + " is done -------------"); //--------------------------------------------- temp
             currentStudent = null;
+        }
+
         }
         
         //----- Check if IDLE -------
@@ -54,16 +58,16 @@ queue.
     }
 
     public boolean checkForStudent(){
-        if(!queue100.isEmpty()){
+        if(queue100.length() >= 0 && currentStudent.getStart() <= time){
             return true;
         }
-        if (!queue200.isEmpty()){
+        if (!queue200.isEmpty() && currentStudent.getStart() <= time){
             return true;
         } 
-        if (!queue300.isEmpty()){
+        if (!queue300.isEmpty()  && currentStudent.getStart() <= time){
             return true;
         }
-        if (!queue400.isEmpty()){
+        if (!queue400.isEmpty()  && currentStudent.getStart() <= time){
             return true;
         }
         return false;
@@ -72,7 +76,7 @@ queue.
     public Student nextStudent(){
         Student tempStudent = null;
 
-        if(!queue100.isEmpty()){
+        if(queue100.length() >= 0){
             tempStudent = queue100.dequeue();
         } else if(!queue200.isEmpty()){
             tempStudent = queue200.dequeue();
@@ -95,8 +99,8 @@ needed).
 • If all escalation attempts fail, logs that the student was turned away.
 */
 
-    public void addStudent(String name, int course, int workload){
-        Student newStudent = new Student(name, course, workload);
+    public void addStudent(int start, String name, int course, int workload){
+        Student newStudent = new Student(start, name, course, workload);
 
             if (course <= 199 &&  queue100.length() < 2){               //No Idea why it has to be two but ig it works
                 queue100.enqueue(newStudent);
@@ -142,6 +146,14 @@ needed).
     public void addLog(String newLog){
         
         return;
+    }
+
+    public void setCurrentStudent(Student currentStudent){
+        this.currentStudent = currentStudent;
+    }
+
+    public Student getCurrentStudent(){
+        return currentStudent;
     }
 
     /*Return the entire HelpDesk session log from beginning to end.

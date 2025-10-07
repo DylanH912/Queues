@@ -11,10 +11,10 @@ public class HelpDeskSimulator{ //Keeps the log
             String info  = scanner.nextLine();
             String[] parts = info.split(" ");
             String name = parts[1];
-            int course = Integer.parseInt(parts[2]);
-            int workload = Integer.parseInt(parts[3]);
+            int course = Integer.parseInt(parts[2]); 
+            int workload = Integer.parseInt(parts[3]); 
             moreStudents = moreStudents();
-            help.addStudent(name, course, workload);
+            help.addStudent(name, course, workload); //Needs to add the students at the start time given
         }    
     }
 

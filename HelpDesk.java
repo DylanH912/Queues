@@ -2,30 +2,90 @@ public class HelpDesk{
     private int time; // current simulation time in minutes
     private Student currentStudent; // the student currently being helped
     private String status; // current status of the help desk (e.g., "IDLE" or "Helping [Student Name] from [Course Number]")
+    private String[] log; //Holds every line in the log
     private ArrayBoundedQueue<Student> queue100 = new ArrayBoundedQueue<Student>();
     private ArrayBoundedQueue<Student> queue200 = new ArrayBoundedQueue<Student>();
-    private ArrayBoundedQueue<Student> queue300 = new ArrayBoundedQueue<Student>(); //I have overthought everything and now understand
+    private ArrayBoundedQueue<Student> queue300 = new ArrayBoundedQueue<Student>(); 
     private ArrayBoundedQueue<Student> queue400 = new ArrayBoundedQueue<Student>(); //this may work better idk tho, might revert later 
-
+                                                                                        //This works great the code was missing increments when enqueue items
+                                                                 
 /*• Advance the simulation one minute.
 • This method handles the time-stepped simulation logic.
 • Checks if the current student being helped is finished.
 • If no student is being helped, retrieves the next student from the highest-priority non-empty
 queue.
 */
-public void step(){
-    this.time++;
 
+    public void step(){
 
-    if(currentStudent == null){
-        this.status = "IDLE";
+        if (currentStudent.getWorkload() == 0){ //Remove Student if no more work is to be done
+            //update log
+            System.out.println(currentStudent.getName() + " is done -------------"); //--------------------------------------------- temp
+            currentStudent = null;
+        }
+        
+        //----- Check if IDLE -------
+        boolean isStudentInQueue = checkForStudent();
+
+        if (isStudentInQueue == false) //Nothing in queues
+        {
+            System.out.println("In HelpDesk > Step() No Students in Queue"); //--------------------------------------------------- temp
+            time++;
+            status = "IDLE";
+            //update log with IDLE
+            System.out.println("Time " + time + ", IDLE");  //Output IDLE
+            return;
+        }
+
+        //Find new currentStudent                   //Dont have to worry about not finding one ----------------------------------- temp
+        if(currentStudent == null){
+            System.out.println("In HelpDesk > Step() Finding next Student"); //---------------------------------------------------- temp
+            currentStudent = nextStudent();
+            //update log Started helping studentName
+        } 
+
+        if (currentStudent.getWorkload() > 0) { //Remove 1 Workload from student
+            currentStudent.subtractWorkload(1);
+            System.out.printf("Time %d, Helping %s from CSC%d %n", time, currentStudent.getName(), currentStudent.getClass());
+        } 
+
+        this.time++;
+
     }
-    else{
-        this.status = "Helping " + currentStudent.toString();
-    }
-    
 
-}
+    public boolean checkForStudent(){
+        if(!queue100.isEmpty()){
+            return true;
+        }
+        if (!queue200.isEmpty()){
+            return true;
+        } 
+        if (!queue300.isEmpty()){
+            return true;
+        }
+        if (!queue400.isEmpty()){
+            return true;
+        }
+        return false;
+    }
+
+    public Student nextStudent(){
+        Student tempStudent = null;
+
+        if(!queue100.isEmpty()){
+            tempStudent = queue100.dequeue();
+        } else if(!queue200.isEmpty()){
+            tempStudent = queue200.dequeue();
+        } else if(!queue300.isEmpty()){
+            tempStudent = queue300.dequeue();
+        } else if(!queue400.isEmpty()){
+            tempStudent = queue400.dequeue();
+        } else{
+            System.out.println("*** ERROR SOMETHING WENT WRONG IN NEXTSTUDENT() *****"); //TEMP --------------------------------
+        }
+
+        return tempStudent;
+    }
 
 /*• Add an arriving student with the indicated name, course number, and workload (minutes
 needed).
@@ -35,57 +95,60 @@ needed).
 • If all escalation attempts fail, logs that the student was turned away.
 */
 
-public void addStudent(String name, int course, int workload){
-    Student newStudent = new Student(name, course, workload);
+    public void addStudent(String name, int course, int workload){
+        Student newStudent = new Student(name, course, workload);
 
-        if (course <= 199 &&  queue100.length() < 2){
-            queue100.enqueue(newStudent);
-            System.out.println("Level-1 " + newStudent.getName() + "  " + queue100.length());
-        } else if (course <= 299 && queue200.length() < 2){
-            queue200.enqueue(newStudent);
-            System.out.println("Level-2 " + newStudent.getName());
-        } else if (course <= 399 && queue300.length() < 2){
-            queue300.enqueue(newStudent);
-            System.out.println("Level-3 " + newStudent.getName());
-        } else if (course <= 499 && queue400.length() < 2){
-            queue400.enqueue(newStudent);
-            System.out.println("Level-4 " + newStudent.getName());
-        } else {
-            System.out.print("****Temp Turned Away " + newStudent.getName() + "*****");
+            if (course <= 199 &&  queue100.length() < 2){               //No Idea why it has to be two but ig it works
+                queue100.enqueue(newStudent);
+                System.out.println("Level-1 " + newStudent.getName() + "  " + queue100.length());
+            } else if (course <= 299 && queue200.length() < 2){
+                queue200.enqueue(newStudent);
+                System.out.println("Level-2 " + newStudent.getName());
+            } else if (course <= 399 && queue300.length() < 2){
+                queue300.enqueue(newStudent);
+                System.out.println("Level-3 " + newStudent.getName());
+            } else if (course <= 499 && queue400.length() < 2){
+                queue400.enqueue(newStudent);
+                System.out.println("Level-4 " + newStudent.getName());
+            } else {
+                System.out.print("****Temp Turned Away " + newStudent.getName() + "*****");
+            }
+    }
+
+    /*Get the current simulation time in minutes.
+    Returns the current value of the simulation clock.
+    */
+    public int getTime(){
+        return this.time;  
+    }
+
+    /*Return the status of the simulation at the current time.
+    Example: "Time 2, Helping Jack from CSC110" or "Time 0, IDLE"
+    */
+
+    public String toString(){
+        String name = currentStudent.getName();
+        int course = currentStudent.getCourse();
+
+        if (status == "IDLE"){
+            return String.format("Time %d, IDLE", this.time);
         }
-}
-
-/*Get the current simulation time in minutes.
-  Returns the current value of the simulation clock.
-*/
-public int getTime(){
-
-return this.time;
-}
-
-/*Return the status of the simulation at the current time.
-  Example: "Time 2, Helping Jack from CSC110" or "Time 0, IDLE"
-  */
-
-public String toString(){
-    String name = currentStudent.getName();
-    int course = currentStudent.getCourse();
-
-    if (status == "IDLE"){
-        return String.format("Time %d, IDLE", this.time);
-    }
-    else{
-        return String.format("Time %d, Helping %s from %s", this.time, name, course);
-    }
+        else{
+            return String.format("Time %d, Helping %s from %s", this.time, name, course);
+        }
     
-}
+    }
 
-/*Return the entire HelpDesk session log from beginning to end.
- Contains a chronological record of all queuing, helping, and completion events.
-*/
-public String getLog(){
+    public void addLog(String newLog){
+        
+        return;
+    }
 
-    return toString();
-}
+    /*Return the entire HelpDesk session log from beginning to end.
+    Contains a chronological record of all queuing, helping, and completion events.
+    */
+    public String[] getLog(){
+        return log;
+    }
 
 } // end of HelpDesk class

@@ -20,10 +20,10 @@ public class HelpDeskSimulator{ //Keeps the log
             int workload = Integer.parseInt(parts[3]); 
             help.addStudent(start, name, course, workload); //Needs to add the students at the start time given
             if(firstArrival){
-                help.setCurrentStudent(help.nextStudent()); //gets the first student to start the process
+                //help.setCurrentStudent(help.nextStudent()); //gets the first student to start the process
                 firstArrival = false;
             }
-            System.out.println("Current Student: " + help.getCurrentStudent().getName());
+            //System.out.println("Current Student: " + help.getCurrentStudent().getName());
             moreStudents = moreStudents();
         }
 
@@ -52,4 +52,3 @@ public class HelpDeskSimulator{ //Keeps the log
         }
     }
 }
-

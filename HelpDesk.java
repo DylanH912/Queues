@@ -15,15 +15,16 @@ public class HelpDesk{
 • If no student is being helped, retrieves the next student from the highest-priority non-empty
 queue.
 */
-
+    private boolean idle = true;
     public void step(){
-        boolean idle = true;
+        
 
         if(!idle){ //Skip all code for helping current students for steps with no student
             if (currentStudent.getWorkload() == 0){ //Remove Student if no more work is to be done
             //update log
             System.out.println(currentStudent.getName() + " is done -------------"); //--------------------------------------------- temp
-            currentStudent = null;
+            currentStudent = nextStudent();
+            return;
         }
 
         }
@@ -34,23 +35,24 @@ queue.
         if (isStudentInQueue == false) //Nothing in queues
         {
             System.out.println("In HelpDesk > Step() No Students in Queue"); //--------------------------------------------------- temp
-            time++;
             status = "IDLE";
             //update log with IDLE
             System.out.println("Time " + time + ", IDLE");  //Output IDLE
+            this.time++;
             return;
         }
 
         //Find new currentStudent                   //Dont have to worry about not finding one ----------------------------------- temp
-        if(currentStudent == null){
+        /*if(currentStudent == null){
             System.out.println("In HelpDesk > Step() Finding next Student"); //---------------------------------------------------- temp
             currentStudent = nextStudent();
             //update log Started helping studentName
         } 
-
+*/
         if (currentStudent.getWorkload() > 0) { //Remove 1 Workload from student
+            idle = false;
             currentStudent.subtractWorkload(1);
-            System.out.printf("Time %d, Helping %s from CSC%d %n", time, currentStudent.getName(), currentStudent.getClass());
+            System.out.printf("Time %d, Helping %s from CSC%d %n", time, currentStudent.getName(), currentStudent.getCourse());
         } 
 
         this.time++;
@@ -78,11 +80,11 @@ queue.
 
         if(queue100.length() >= 0){
             tempStudent = queue100.dequeue();
-        } else if(!queue200.isEmpty()){
+        } else if(queue200.length() >= 0){
             tempStudent = queue200.dequeue();
-        } else if(!queue300.isEmpty()){
+        } else if(queue300.length() >= 0){
             tempStudent = queue300.dequeue();
-        } else if(!queue400.isEmpty()){
+        } else if(queue400.length() >= 0){
             tempStudent = queue400.dequeue();
         } else{
             System.out.println("*** ERROR SOMETHING WENT WRONG IN NEXTSTUDENT() *****"); //TEMP --------------------------------
@@ -104,15 +106,15 @@ needed).
 
             if (course <= 199 &&  queue100.length() < 2){               //No Idea why it has to be two but ig it works
                 queue100.enqueue(newStudent);
-                System.out.println("Level-1 " + newStudent.getName() + "  " + queue100.length());
+                //System.out.println("Level-1 " + newStudent.getName() + "  " + (queue100.length() + 1));
             } else if (course <= 299 && queue200.length() < 2){
                 queue200.enqueue(newStudent);
-                System.out.println("Level-2 " + newStudent.getName());
+                //System.out.println("Level-2 " + newStudent.getName());
             } else if (course <= 399 && queue300.length() < 2){
-                queue300.enqueue(newStudent);
+                //queue300.enqueue(newStudent);
                 System.out.println("Level-3 " + newStudent.getName());
             } else if (course <= 499 && queue400.length() < 2){
-                queue400.enqueue(newStudent);
+                //queue400.enqueue(newStudent);
                 System.out.println("Level-4 " + newStudent.getName());
             } else {
                 System.out.print("****Temp Turned Away " + newStudent.getName() + "*****");

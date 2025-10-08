@@ -16,23 +16,24 @@ public class LinkedQueue<T> implements QueueInterface<T> {
     }
     public void enqueue(T item){
         LLNode<T> a = new LLNode<T>(item);
-        numElements++;
-        if(isEmpty()){
+        if(numElements==0){
             front = a;
             rear=a;
+            numElements++;
             return;
         }
         rear.setNext(a);
         rear=a;
+        numElements++;
     }
     public T dequeue(){
-        if(isEmpty()){
+        if(numElements==0){
             rear=null;
             front=null;
             return null;
         }
         LLNode<T> temp = front;
-        front.setNext(front.getNext());
+        front = front.getNext();
         numElements--;
         return temp.getInfo();
     }

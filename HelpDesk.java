@@ -106,16 +106,16 @@ needed).
     public void addStudent(int start, String name, int course, int workload){
         Student newStudent = new Student(start, name, course, workload);
 
-            if (course <= 199 &&  queue100.length() < 2){               //No Idea why it has to be two but ig it works
+            if (course <= 199 &&  queue100.length() < 4){               
                 queue100.enqueue(newStudent);
                 //System.out.println("Level-1 " + newStudent.getName() + "  " + (queue100.length() + 1));
-            } else if (course <= 299 && queue200.length() < 2){
+            } else if (course <= 299 && queue200.length() < 4){
                 queue200.enqueue(newStudent);
                 //System.out.println("Level-2 " + newStudent.getName());
-            } else if (course <= 399 && queue300.length() < 2){
+            } else if (course <= 399 && queue300.length() < 4){
                 queue300.enqueue(newStudent);
                 //System.out.println("Level-3 " + newStudent.getName());
-            } else if (course <= 499 && queue400.length() < 2){
+            } else if (course <= 499 && queue400.length() < 4){
                 queue400.enqueue(newStudent);
                 //System.out.println("Level-4 " + newStudent.getName());
             } else {
@@ -168,3 +168,4 @@ needed).
     }
 
 } // end of HelpDesk class
+

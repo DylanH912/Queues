@@ -22,6 +22,7 @@ queue.
             
             if (currentStudent != null && currentStudent.getWorkload() == 0){ //Remove Student if no more work is to be done
             //update log
+            addLog("\n Time " + this.time + ", Finished helping " + currentStudent.getName() + " from CSC" + currentStudent.getCourse());
             System.out.println(currentStudent.getName() + " is done -------------"); //--------------------------------------------- temp
             currentStudent = null;
             //System.out.println("New Student: " + currentStudent.getName()); //--------------------------------------------- temp
@@ -56,6 +57,8 @@ queue.
             currentStudent = nextStudent();
             step();
             //update log Started helping studentName
+            addLog("\n Time " + this.time + ", Started helping " + currentStudent.getName() + " from CSC" + currentStudent.getCourse());
+            
         } 
 
     }

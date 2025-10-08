@@ -23,10 +23,11 @@ public class HelpDeskSimulator{ //Keeps the log
                 help.setCurrentStudent(help.nextStudent()); //gets the first student to start the process
                 firstArrival = false;
             }
+            System.out.println("Current Student: " + help.getCurrentStudent().getName());
             moreStudents = moreStudents();
         }
 
-        for(int i = 0; i < toDo; i++){
+        for(int i = 0; i <= toDo; i++){
             help.step();
         }
         
@@ -51,3 +52,4 @@ public class HelpDeskSimulator{ //Keeps the log
         }
     }
 }
+

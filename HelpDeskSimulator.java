@@ -30,6 +30,9 @@ public class HelpDeskSimulator{ //Keeps the log
         for(int i = 0; i <= toDo; i++){
             help.step();
         }
+
+        System.out.println("\n LOG:")
+        System.out.println(help.getLog());
         
     }
 

@@ -2,7 +2,7 @@ public class HelpDesk{
     private int time; // current simulation time in minutes
     private Student currentStudent; // the student currently being helped
     private String status; // current status of the help desk (e.g., "IDLE" or "Helping [Student Name] from [Course Number]")
-    private String[] log; //Holds every line in the log
+    private String log; //Holds every line in the log
     private LinkedGlassQueue<Student> queue100 = new LinkedGlassQueue<Student>();
     private LinkedGlassQueue<Student> queue200 = new LinkedGlassQueue<Student>();
     private LinkedGlassQueue<Student> queue300 = new LinkedGlassQueue<Student>(); 
@@ -22,6 +22,7 @@ queue.
             
             if (currentStudent != null && currentStudent.getWorkload() == 0){ //Remove Student if no more work is to be done
             //update log
+            addLog("\n Time " + this.time + ", Finished helping " + currentStudent.getName() + " from CSC" + currentStudent.getCourse());
             System.out.println(currentStudent.getName() + " is done -------------"); //--------------------------------------------- temp
             currentStudent = null;
             //System.out.println("New Student: " + currentStudent.getName()); //--------------------------------------------- temp
@@ -54,6 +55,7 @@ queue.
         if(currentStudent == null){
             //System.out.println("In HelpDesk > Step() Finding next Student"); //---------------------------------------------------- temp
             currentStudent = nextStudent();
+            addLog("\n Time " + this.time + ", Started helping " + currentStudent.getName() + " from CSC" + currentStudent.getCourse());
             step();
             //update log Started helping studentName
         } 
@@ -149,6 +151,7 @@ needed).
 
     public void addLog(String newLog){
         
+        log += newLog;
         return;
     }
 
@@ -163,7 +166,7 @@ needed).
     /*Return the entire HelpDesk session log from beginning to end.
     Contains a chronological record of all queuing, helping, and completion events.
     */
-    public String[] getLog(){
+    public String getLog(){
         return log;
     }
 

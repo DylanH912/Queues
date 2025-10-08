@@ -49,7 +49,7 @@ queue.
             //update log Started helping studentName
         } 
 */
-        if (currentStudent.getWorkload() > 0) { //Remove 1 Workload from student
+        if (currentStudent.getWorkload() > 0 && currentStudent != null) { //Remove 1 Workload from student
             idle = false;
             currentStudent.subtractWorkload(1);
             System.out.printf("Time %d, Helping %s from CSC%d %n", time, currentStudent.getName(), currentStudent.getCourse());

@@ -17,6 +17,7 @@ public class ArrayBoundedQueue<T> implements QueueInterface<T> {
         T temp = elements[front];
         if(front==DEFCAP-1){
             front=0;
+            numElements++;
             return temp;
         }
         front++;
@@ -27,6 +28,7 @@ public class ArrayBoundedQueue<T> implements QueueInterface<T> {
         if(rear==DEFCAP-1){
             rear=0;
             elements[rear]=item;
+            numElements++;
             return;
         }        
         rear++;

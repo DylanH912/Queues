@@ -80,13 +80,13 @@ queue.
     public Student nextStudent(){
         Student tempStudent = null;
 
-        if(queue100.length() > 0){
+        if(queue100.length() > 0 && queue100.peekFront().getStart() <= time){
             tempStudent = queue100.dequeue();
-        } else if(queue200.length() > 0){
+        } else if(queue200.length() > 0 && queue200.peekFront().getStart() <= time){
             tempStudent = queue200.dequeue();
-        } else if(queue300.length() > 0){
+        } else if(queue300.length() > 0 && queue300.peekFront().getStart() <= time){
             tempStudent = queue300.dequeue();
-        } else if(queue400.length() > 0){
+        } else if(queue400.length() > 0 && queue400.peekFront().getStart() <= time){
             tempStudent = queue400.dequeue();
         } else{
             System.out.println("*** ERROR SOMETHING WENT WRONG IN NEXTSTUDENT() *****"); //TEMP --------------------------------

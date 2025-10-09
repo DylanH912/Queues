@@ -14,4 +14,13 @@ public class LinkedGlassQueue<T> extends LinkedQueue<T> {
         }
         return rear.getInfo();
     }
+
+    
+    public T peekAt(int i){
+        LLNode<T> tempFront = front;
+        for(int j = 0; j < i; j++){
+            tempFront = tempFront.getNext();
+        }
+        return tempFront.getInfo();
+    }
 }

@@ -6,6 +6,8 @@ public class HelpDeskSimulator{ //Keeps the log
         HelpDesk help = new HelpDesk();
         System.out.print("Enter the number of minutes to simulate: ");
         int toDo = scanner.nextInt();
+        String[] log;
+        int logReader = 0;
         scanner.nextLine(); //Consume newline
         
         boolean moreStudents = true;
@@ -30,6 +32,11 @@ public class HelpDeskSimulator{ //Keeps the log
         for(int i = 0; i <= toDo; i++){
             help.step();
         }
+        log = help.getLog();
+        while(log[logReader] != null){
+            System.out.print(log[logReader]);
+            logReader++;
+        }
         
     }
 
@@ -52,3 +59,4 @@ public class HelpDeskSimulator{ //Keeps the log
         }
     }
 }
+

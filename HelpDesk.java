@@ -1,5 +1,4 @@
 public class HelpDesk{
-public class HelpDesk{
     private int time; // current simulation time in minutes
     private Student currentStudent; // the student currently being helped
     private String status; // current status of the help desk (e.g., "IDLE" or "Helping [Student Name] from [Course Number]")
@@ -37,32 +36,32 @@ queue.
             currentStudent.subtractWorkload(1);
             System.out.printf("Time %d, Helping %s from CSC%d %n", time, currentStudent.getName(), currentStudent.getCourse());
             for(int i = 0; i < queue100.length(); i++){
-                if(queue100.peekFront().getStart() == time){
-                    addLog("\n Time " + this.time + ", Queued " + queue100.peekFront().getName() + " from CSC" + queue100.peekFront().getCourse());
+                if(queue100.peekAt(i).getStart() == time){
+                    addLog("\n Time " + this.time + ", Queued " + queue100.peekAt(i).getName() + " from CSC" + queue100.peekAt(i).getCourse());
                 }
                 else{
                     break;
                 }
             }
             for(int i = 0; i < queue200.length(); i++){
-                if(queue200.peekFront().getStart() == time){
-                    addLog("\n Time " + this.time + ", Queued " + queue200.peekFront().getName() + " from CSC" + queue200.peekFront().getCourse());
+                if(queue200.peekAt(i).getStart() == time){
+                    addLog("\n Time " + this.time + ", Queued " + queue200.peekAt(i).getName() + " from CSC" + queue200.peekAt(i).getCourse());
                 }
                 else{
                     break;
                 }
             }
             for(int i = 0; i < queue300.length(); i++){
-                if(queue300.peekFront().getStart() == time){
-                    addLog("\n Time " + this.time + ", Queued " + queue300.peekFront().getName() + " from CSC" + queue300.peekFront().getCourse());
+                if(queue300.peekAt(i).getStart() == time){
+                    addLog("\n Time " + this.time + ", Queued " + queue300.peekAt(i).getName() + " from CSC" + queue300.peekAt(i).getCourse());
                 }
                 else{
                     break;
                 }
             }
             for(int i = 0; i < queue400.length(); i++){
-                if(queue400.peekFront().getStart() == time){
-                    addLog("\n Time " + this.time + ", Queued " + queue400.peekFront().getName() + " from CSC" + queue400.peekFront().getCourse());
+                if(queue400.peekAt(i).getStart() == time){
+                    addLog("\n Time " + this.time + ", Queued " + queue400.peekAt(i).getName() + " from CSC" + queue400.peekAt(i).getCourse());
                 }
                 else{
                     break;
@@ -217,4 +216,7 @@ needed).
     }
 
 } // end of HelpDesk class
+
+
+
 

@@ -1,12 +1,15 @@
 public class HelpDesk{
+public class HelpDesk{
     private int time; // current simulation time in minutes
     private Student currentStudent; // the student currently being helped
     private String status; // current status of the help desk (e.g., "IDLE" or "Helping [Student Name] from [Course Number]")
-    private String[] log; //Holds every line in the log
+    private String[] log = new String[1000]; //Holds every line in the log
+    private int logSpot = 0;
     private LinkedGlassQueue<Student> queue100 = new LinkedGlassQueue<Student>();
     private LinkedGlassQueue<Student> queue200 = new LinkedGlassQueue<Student>();
     private LinkedGlassQueue<Student> queue300 = new LinkedGlassQueue<Student>(); 
     private LinkedGlassQueue<Student> queue400 = new LinkedGlassQueue<Student>(); //this may work better idk tho, might revert later 
+    private LinkedGlassQueue<Student> overflow = new LinkedGlassQueue<Student>();
                                                                                         //This works great the code was missing increments when enqueue items
                                                                  
 /*• Advance the simulation one minute.
@@ -33,6 +36,47 @@ queue.
             idle = false;
             currentStudent.subtractWorkload(1);
             System.out.printf("Time %d, Helping %s from CSC%d %n", time, currentStudent.getName(), currentStudent.getCourse());
+            for(int i = 0; i < queue100.length(); i++){
+                if(queue100.peekFront().getStart() == time){
+                    addLog("\n Time " + this.time + ", Queued " + queue100.peekFront().getName() + " from CSC" + queue100.peekFront().getCourse());
+                }
+                else{
+                    break;
+                }
+            }
+            for(int i = 0; i < queue200.length(); i++){
+                if(queue200.peekFront().getStart() == time){
+                    addLog("\n Time " + this.time + ", Queued " + queue200.peekFront().getName() + " from CSC" + queue200.peekFront().getCourse());
+                }
+                else{
+                    break;
+                }
+            }
+            for(int i = 0; i < queue300.length(); i++){
+                if(queue300.peekFront().getStart() == time){
+                    addLog("\n Time " + this.time + ", Queued " + queue300.peekFront().getName() + " from CSC" + queue300.peekFront().getCourse());
+                }
+                else{
+                    break;
+                }
+            }
+            for(int i = 0; i < queue400.length(); i++){
+                if(queue400.peekFront().getStart() == time){
+                    addLog("\n Time " + this.time + ", Queued " + queue400.peekFront().getName() + " from CSC" + queue400.peekFront().getCourse());
+                }
+                else{
+                    break;
+                }
+            }
+            for(int i = 0; i < overflow.length(); i++){
+                if(overflow.peekFront().getStart() == time){
+                    addLog("\n Time " + this.time + ", Turned Away " + overflow.peekFront().getName() + " from CSC" + overflow.peekFront().getCourse());
+                    overflow.dequeue();
+                }
+                else{
+                    break;
+                }
+            }
             this.time++;
             return;
         } 
@@ -55,9 +99,10 @@ queue.
         if(currentStudent == null){
             //System.out.println("In HelpDesk > Step() Finding next Student"); //---------------------------------------------------- temp
             currentStudent = nextStudent();
+            addLog("\n Time " + this.time + ", Started helping " + currentStudent.getName() + " from CSC" + currentStudent.getCourse());
             step();
             //update log Started helping studentName
-            addLog("\n Time " + this.time + ", Started helping " + currentStudent.getName() + " from CSC" + currentStudent.getCourse());
+            
             
         } 
 
@@ -122,7 +167,7 @@ needed).
                 queue400.enqueue(newStudent);
                 //System.out.println("Level-4 " + newStudent.getName());
             } else {
-                System.out.print("****Temp Turned Away " + newStudent.getName() + "*****");
+                overflow.enqueue(newStudent);
             }
     }
 
@@ -151,7 +196,8 @@ needed).
     }
 
     public void addLog(String newLog){
-        
+        log[logSpot] = newLog;
+        logSpot++;
         return;
     }
 
